@@ -1,0 +1,780 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1600,
+  "model": {
+    "culture": "en-CA",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/isaac_awotwe\\ISAACMDX;TescaDB",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "isaac_awotwe\\ISAACMDX",
+            "database": "TescaDB"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "credential": {
+          "AuthenticationKind": "UsernamePassword",
+          "kind": "SQL",
+          "path": "isaac_awotwe\\isaacmdx;TescaDB",
+          "Username": "sa",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "EDW fact_SalesAnalysis",
+        "columns": [
+          {
+            "name": "salesSK",
+            "dataType": "int64",
+            "sourceColumn": "salesSK"
+          },
+          {
+            "name": "TransactionNo",
+            "dataType": "string",
+            "sourceColumn": "TransactionNo"
+          },
+          {
+            "name": "TransDateSK",
+            "dataType": "int64",
+            "sourceColumn": "TransDateSK"
+          },
+          {
+            "name": "TransHourSK",
+            "dataType": "int64",
+            "sourceColumn": "TransHourSK"
+          },
+          {
+            "name": "OrderDateSK",
+            "dataType": "int64",
+            "sourceColumn": "OrderDateSK"
+          },
+          {
+            "name": "OrderHourSK",
+            "dataType": "int64",
+            "sourceColumn": "OrderHourSK"
+          },
+          {
+            "name": "DeliveryDateSK",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryDateSK"
+          },
+          {
+            "name": "ChannelSK",
+            "dataType": "int64",
+            "sourceColumn": "ChannelSK"
+          },
+          {
+            "name": "CustomerSK",
+            "dataType": "int64",
+            "sourceColumn": "CustomerSK"
+          },
+          {
+            "name": "EmployeeSK",
+            "dataType": "int64",
+            "sourceColumn": "EmployeeSK"
+          },
+          {
+            "name": "ProductSK",
+            "dataType": "int64",
+            "sourceColumn": "ProductSK"
+          },
+          {
+            "name": "StoreSK",
+            "dataType": "int64",
+            "sourceColumn": "StoreSK"
+          },
+          {
+            "name": "PromotionSK",
+            "dataType": "int64",
+            "sourceColumn": "PromotionSK"
+          },
+          {
+            "name": "Quantity",
+            "dataType": "double",
+            "sourceColumn": "Quantity"
+          },
+          {
+            "name": "TaxAmount",
+            "dataType": "double",
+            "sourceColumn": "TaxAmount"
+          },
+          {
+            "name": "LineAmount",
+            "dataType": "double",
+            "sourceColumn": "LineAmount"
+          },
+          {
+            "name": "LineDiscountAmount",
+            "dataType": "double",
+            "sourceColumn": "LineDiscountAmount"
+          },
+          {
+            "name": "LoadDate",
+            "dataType": "dateTime",
+            "sourceColumn": "LoadDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data]",
+                "in",
+                "    EDW_fact_SalesAnalysis"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "EDW DimCustomer",
+        "columns": [
+          {
+            "name": "customerSK",
+            "dataType": "int64",
+            "sourceColumn": "customerSK"
+          },
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "sourceColumn": "CustomerID"
+          },
+          {
+            "name": "Name",
+            "dataType": "string",
+            "sourceColumn": "Name"
+          },
+          {
+            "name": "Address",
+            "dataType": "string",
+            "sourceColumn": "Address"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City"
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "sourceColumn": "State"
+          },
+          {
+            "name": "CreatedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "CreatedDate"
+          },
+          {
+            "name": "EffectiveDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimCustomer = Source{[Schema=\"EDW\",Item=\"DimCustomer\"]}[Data]",
+                "in",
+                "    EDW_DimCustomer"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "EDW DimDate",
+        "columns": [
+          {
+            "name": "dateSK",
+            "dataType": "int64",
+            "sourceColumn": "dateSK"
+          },
+          {
+            "name": "BusinessDate",
+            "dataType": "dateTime",
+            "sourceColumn": "BusinessDate"
+          },
+          {
+            "name": "BusinessYear",
+            "dataType": "int64",
+            "sourceColumn": "BusinessYear"
+          },
+          {
+            "name": "BusinessMonth",
+            "dataType": "int64",
+            "sourceColumn": "BusinessMonth"
+          },
+          {
+            "name": "BusinessQuarter",
+            "dataType": "string",
+            "sourceColumn": "BusinessQuarter"
+          },
+          {
+            "name": "EnglishMonth",
+            "dataType": "string",
+            "sourceColumn": "EnglishMonth"
+          },
+          {
+            "name": "SpanishMonth",
+            "dataType": "string",
+            "sourceColumn": "SpanishMonth"
+          },
+          {
+            "name": "FrenchMonth",
+            "dataType": "string",
+            "sourceColumn": "FrenchMonth"
+          },
+          {
+            "name": "EnglishDayofWeek",
+            "dataType": "string",
+            "sourceColumn": "EnglishDayofWeek"
+          },
+          {
+            "name": "SpanishDayofWeek",
+            "dataType": "string",
+            "sourceColumn": "SpanishDayofWeek"
+          },
+          {
+            "name": "FrenchDayofWeek",
+            "dataType": "string",
+            "sourceColumn": "FrenchDayofWeek"
+          },
+          {
+            "name": "LoadDate",
+            "dataType": "dateTime",
+            "sourceColumn": "LoadDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimDate = Source{[Schema=\"EDW\",Item=\"DimDate\"]}[Data]",
+                "in",
+                "    EDW_DimDate"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "EDW DimEmployee",
+        "columns": [
+          {
+            "name": "employeeSK",
+            "dataType": "int64",
+            "sourceColumn": "employeeSK"
+          },
+          {
+            "name": "EmployeeID",
+            "dataType": "int64",
+            "sourceColumn": "EmployeeID"
+          },
+          {
+            "name": "EmployeeNumber",
+            "dataType": "string",
+            "sourceColumn": "EmployeeNumber"
+          },
+          {
+            "name": "EmployeeName",
+            "dataType": "string",
+            "sourceColumn": "EmployeeName"
+          },
+          {
+            "name": "DateofBirth",
+            "dataType": "dateTime",
+            "sourceColumn": "DateofBirth"
+          },
+          {
+            "name": "MaritalStatus",
+            "dataType": "string",
+            "sourceColumn": "MaritalStatus"
+          },
+          {
+            "name": "EffectiveStartDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveStartDate"
+          },
+          {
+            "name": "EffectiveEndDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveEndDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimEmployee = Source{[Schema=\"EDW\",Item=\"DimEmployee\"]}[Data]",
+                "in",
+                "    EDW_DimEmployee"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "EDW DimPOSChannel",
+        "columns": [
+          {
+            "name": "poschannelSK",
+            "dataType": "int64",
+            "sourceColumn": "poschannelSK"
+          },
+          {
+            "name": "ChannelID",
+            "dataType": "int64",
+            "sourceColumn": "ChannelID"
+          },
+          {
+            "name": "ChannelNumber",
+            "dataType": "string",
+            "sourceColumn": "ChannelNumber"
+          },
+          {
+            "name": "DeviceModel",
+            "dataType": "string",
+            "sourceColumn": "DeviceModel"
+          },
+          {
+            "name": "SerialNumber",
+            "dataType": "string",
+            "sourceColumn": "SerialNumber"
+          },
+          {
+            "name": "InstallationDate",
+            "dataType": "dateTime",
+            "sourceColumn": "InstallationDate"
+          },
+          {
+            "name": "EffectiveStartDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveStartDate"
+          },
+          {
+            "name": "EffectiveEndDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveEndDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimPOSChannel = Source{[Schema=\"EDW\",Item=\"DimPOSChannel\"]}[Data]",
+                "in",
+                "    EDW_DimPOSChannel"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "EDW DimProduct",
+        "columns": [
+          {
+            "name": "productSK",
+            "dataType": "int64",
+            "sourceColumn": "productSK"
+          },
+          {
+            "name": "ProductID",
+            "dataType": "int64",
+            "sourceColumn": "ProductID"
+          },
+          {
+            "name": "Product",
+            "dataType": "string",
+            "sourceColumn": "Product"
+          },
+          {
+            "name": "ProductNumber",
+            "dataType": "string",
+            "sourceColumn": "ProductNumber"
+          },
+          {
+            "name": "Department",
+            "dataType": "string",
+            "sourceColumn": "Department"
+          },
+          {
+            "name": "UnitPrice",
+            "dataType": "double",
+            "sourceColumn": "UnitPrice"
+          },
+          {
+            "name": "EffectiveStartDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveStartDate"
+          },
+          {
+            "name": "EffectiveEndDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveEndDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimProduct = Source{[Schema=\"EDW\",Item=\"DimProduct\"]}[Data]",
+                "in",
+                "    EDW_DimProduct"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "EDW DimPromotion",
+        "columns": [
+          {
+            "name": "promotionSK",
+            "dataType": "int64",
+            "sourceColumn": "promotionSK"
+          },
+          {
+            "name": "PromotionID",
+            "dataType": "int64",
+            "sourceColumn": "PromotionID"
+          },
+          {
+            "name": "Promotion",
+            "dataType": "string",
+            "sourceColumn": "Promotion"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "dateTime",
+            "sourceColumn": "StartDate"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EndDate"
+          },
+          {
+            "name": "DiscountPercent",
+            "dataType": "double",
+            "sourceColumn": "DiscountPercent"
+          },
+          {
+            "name": "EffectiveDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimPromotion = Source{[Schema=\"EDW\",Item=\"DimPromotion\"]}[Data]",
+                "in",
+                "    EDW_DimPromotion"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "EDW DimStore",
+        "columns": [
+          {
+            "name": "storeSK",
+            "dataType": "int64",
+            "sourceColumn": "storeSK"
+          },
+          {
+            "name": "StoreID",
+            "dataType": "int64",
+            "sourceColumn": "StoreID"
+          },
+          {
+            "name": "Store",
+            "dataType": "string",
+            "sourceColumn": "Store"
+          },
+          {
+            "name": "Address",
+            "dataType": "string",
+            "sourceColumn": "Address"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City"
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "sourceColumn": "State"
+          },
+          {
+            "name": "EffectiveDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EffectiveDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimStore = Source{[Schema=\"EDW\",Item=\"DimStore\"]}[Data]",
+                "in",
+                "    EDW_DimStore"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "TransHour",
+        "columns": [
+          {
+            "name": "TimeSk",
+            "dataType": "int64",
+            "sourceColumn": "TimeSk"
+          },
+          {
+            "name": "TimeHour",
+            "dataType": "int64",
+            "sourceColumn": "TimeHour"
+          },
+          {
+            "name": "TimeInterval",
+            "dataType": "string",
+            "sourceColumn": "TimeInterval"
+          },
+          {
+            "name": "BusinessHour",
+            "dataType": "string",
+            "sourceColumn": "BusinessHour"
+          },
+          {
+            "name": "PeriodofDay",
+            "dataType": "string",
+            "sourceColumn": "PeriodofDay"
+          },
+          {
+            "name": "LoadDate",
+            "dataType": "dateTime",
+            "sourceColumn": "LoadDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_DimTime = Source{[Schema=\"EDW\",Item=\"DimTime\"]}[Data]",
+                "in",
+                "    EDW_DimTime"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "OrderHour",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "TimeSk",
+            "dataType": "int64",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "TransHour[TimeSk]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "TimeHour",
+            "dataType": "int64",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "TransHour[TimeHour]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "TimeInterval",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "TransHour[TimeInterval]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "BusinessHour",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "TransHour[BusinessHour]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "PeriodofDay",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "TransHour[PeriodofDay]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "LoadDate",
+            "dataType": "dateTime",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "TransHour[LoadDate]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "'TransHour'"
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "fe6f35e8-028c-4cda-a667-e9622c2b4719",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "DeliveryDateSK",
+        "toTable": "EDW DimDate",
+        "toColumn": "dateSK",
+        "isActive": false
+      },
+      {
+        "name": "ab411bb6-03e5-4f4f-9587-247f51cfbc8d",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "OrderDateSK",
+        "toTable": "EDW DimDate",
+        "toColumn": "dateSK",
+        "isActive": false
+      },
+      {
+        "name": "e3c4b2ca-4ceb-4dce-822b-8ac1cfe3eae1",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "CustomerSK",
+        "toTable": "EDW DimCustomer",
+        "toColumn": "customerSK"
+      },
+      {
+        "name": "55f59ef8-770d-4c32-b7a0-b08b145f9fe2",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "TransDateSK",
+        "toTable": "EDW DimDate",
+        "toColumn": "dateSK"
+      },
+      {
+        "name": "a5975918-43c7-41f4-ada4-eb2cb081f262",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "EmployeeSK",
+        "toTable": "EDW DimEmployee",
+        "toColumn": "employeeSK"
+      },
+      {
+        "name": "b4a163c8-ac61-42a1-a45c-c282c015bc79",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "ChannelSK",
+        "toTable": "EDW DimPOSChannel",
+        "toColumn": "poschannelSK"
+      },
+      {
+        "name": "fda8ab7b-f799-4524-bccb-4736e3365964",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "ProductSK",
+        "toTable": "EDW DimProduct",
+        "toColumn": "productSK"
+      },
+      {
+        "name": "9dc9b3fb-acec-4e60-8dc9-90936c5ce5d7",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "PromotionSK",
+        "toTable": "EDW DimPromotion",
+        "toColumn": "promotionSK"
+      },
+      {
+        "name": "ccc20469-ad79-4146-97d0-56fd4540d4e9",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "StoreSK",
+        "toTable": "EDW DimStore",
+        "toColumn": "storeSK"
+      },
+      {
+        "name": "655b58ed-6fe9-4fdf-a173-7cc2ca8ace82",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "TransHourSK",
+        "toTable": "TransHour",
+        "toColumn": "TimeSk"
+      },
+      {
+        "name": "d42fc633-07b5-47d6-9530-ada777f50047",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "OrderHourSK",
+        "toTable": "OrderHour",
+        "toColumn": "TimeSk"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "700"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
