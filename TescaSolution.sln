@@ -7,8 +7,6 @@ Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "TescaStaging", "TescaStagin
 EndProject
 Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "TescaWarehouse", "TescaWarehouse\TescaWarehouse.dtproj", "{AC2E5B18-E60D-4BC7-A7C4-4BA15F15572E}"
 EndProject
-Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "TescaTab", "TescaTab\TescaTab.smproj", "{8CE414BB-95B2-4C99-9E03-51BA72086E22}"
-EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TescaDB", "TescaDB\TescaDB.sqlproj", "{7E23C0A0-D943-4BDB-BD60-3272332463AF}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TescaOLTP", "TescaOLTP\TescaOLTP.sqlproj", "{88D74F99-18FE-4F8A-96E9-E73867B48FAE}"
@@ -47,24 +45,6 @@ Global
 		{AC2E5B18-E60D-4BC7-A7C4-4BA15F15572E}.Release|Any CPU.Build.0 = Development
 		{AC2E5B18-E60D-4BC7-A7C4-4BA15F15572E}.Release|x86.ActiveCfg = Development
 		{AC2E5B18-E60D-4BC7-A7C4-4BA15F15572E}.Release|x86.Build.0 = Development
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Debug|Any CPU.ActiveCfg = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Debug|Any CPU.Build.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Debug|Any CPU.Deploy.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Debug|x86.ActiveCfg = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Debug|x86.Build.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Debug|x86.Deploy.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|Any CPU.ActiveCfg = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|Any CPU.Build.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|Any CPU.Deploy.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|x86.ActiveCfg = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|x86.Build.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|x86.Deploy.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|Any CPU.ActiveCfg = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|Any CPU.Build.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|Any CPU.Deploy.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|x86.ActiveCfg = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|x86.Build.0 = Development|x86
-		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Release|x86.Deploy.0 = Development|x86
 		{7E23C0A0-D943-4BDB-BD60-3272332463AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E23C0A0-D943-4BDB-BD60-3272332463AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E23C0A0-D943-4BDB-BD60-3272332463AF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
