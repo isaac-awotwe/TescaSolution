@@ -1,0 +1,27 @@
+﻿CREATE TABLE [EDW].[fact_PurchaseAnalysis] (
+    [purchaseSK]       BIGINT        IDENTITY (1, 1) NOT NULL,
+    [TransactionNo]    NVARCHAR (50) NULL,
+    [TransDateSK]      INT           NULL,
+    [OrderDateSK]      INT           NULL,
+    [DeliveryDateSK]   INT           NULL,
+    [ShipDateSK]       INT           NULL,
+    [VendorSK]         INT           NULL,
+    [EmployeeSK]       INT           NULL,
+    [ProductSK]        INT           NULL,
+    [StoreSK]          INT           NULL,
+    [Quantity]         FLOAT (53)    NULL,
+    [TaxAmount]        FLOAT (53)    NULL,
+    [LineAmount]       FLOAT (53)    NULL,
+    [DifferentialDays] FLOAT (53)    NULL,
+    [LoadDate]         DATETIME      NULL,
+    CONSTRAINT [edw_purchase_sk] PRIMARY KEY CLUSTERED ([purchaseSK] ASC),
+    CONSTRAINT [edw_purchase_deliverydate_fk] FOREIGN KEY ([DeliveryDateSK]) REFERENCES [EDW].[DimDate] ([dateSK]),
+    CONSTRAINT [edw_purchase_employee_fk] FOREIGN KEY ([EmployeeSK]) REFERENCES [EDW].[DimEmployee] ([employeeSK]),
+    CONSTRAINT [edw_purchase_orderdate_fk] FOREIGN KEY ([OrderDateSK]) REFERENCES [EDW].[DimDate] ([dateSK]),
+    CONSTRAINT [edw_purchase_shipdate_fk] FOREIGN KEY ([ShipDateSK]) REFERENCES [EDW].[DimDate] ([dateSK]),
+    CONSTRAINT [edw_purchase_store_fk] FOREIGN KEY ([StoreSK]) REFERENCES [EDW].[DimStore] ([storeSK]),
+    CONSTRAINT [edw_purchase_transdate_fk] FOREIGN KEY ([TransDateSK]) REFERENCES [EDW].[DimDate] ([dateSK]),
+    CONSTRAINT [edw_purchase_vendor_fk] FOREIGN KEY ([VendorSK]) REFERENCES [EDW].[DimVendor] ([vendorSK]),
+    CONSTRAINT [edw_purchases_product_fk] FOREIGN KEY ([ProductSK]) REFERENCES [EDW].[DimProduct] ([productSK])
+);
+

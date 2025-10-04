@@ -1,0 +1,3 @@
+﻿CREATE SCHEMA [Grocery_EDW]
+    AUTHORIZATION [dbo];
+

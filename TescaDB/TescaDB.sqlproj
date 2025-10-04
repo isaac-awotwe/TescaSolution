@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>TescaDB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{7e23c0a0-d943-4bdb-bd60-3272332463af}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>TescaDB</RootNamespace>
+    <AssemblyName>TescaDB</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="staging\" />
+    <Folder Include="staging\Tables\" />
+    <Folder Include="EDW\" />
+    <Folder Include="EDW\Tables\" />
+    <Folder Include="control\" />
+    <Folder Include="control\Tables\" />
+    <Folder Include="EDW\Stored Procedures\" />
+    <Folder Include="Security\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="staging\Tables\Vendor.sql" />
+    <Build Include="staging\Tables\Misconduct.sql" />
+    <Build Include="staging\Tables\Decision.sql" />
+    <Build Include="staging\Tables\Absence.sql" />
+    <Build Include="EDW\Tables\DimProduct.sql" />
+    <Build Include="EDW\Tables\DimPromotion.sql" />
+    <Build Include="EDW\Tables\DimStore.sql" />
+    <Build Include="EDW\Tables\DimPOSChannel.sql" />
+    <Build Include="EDW\Tables\DimEmployee.sql" />
+    <Build Include="EDW\Tables\DimVendor.sql" />
+    <Build Include="EDW\Tables\DimMisconduct.sql" />
+    <Build Include="EDW\Tables\DimDecision.sql" />
+    <Build Include="EDW\Tables\DimAbsence.sql" />
+    <Build Include="staging\Tables\SalesAnalysis.sql" />
+    <Build Include="staging\Tables\PurchaseAnalysis.sql" />
+    <Build Include="EDW\Tables\fact_PurchaseAnalysis.sql" />
+    <Build Include="EDW\Tables\DimTime.sql" />
+    <Build Include="EDW\Tables\DimDate.sql" />
+    <Build Include="staging\Tables\OvertimeAnalysis.sql" />
+    <Build Include="EDW\Tables\fact_OvertimeAnalysis.sql" />
+    <Build Include="staging\Tables\Store.sql" />
+    <Build Include="staging\Tables\AbsenceAnalysis.sql" />
+    <Build Include="EDW\Tables\fact_AbsenceAnalysis.sql" />
+    <Build Include="staging\Tables\MisconductAnalysis.sql" />
+    <Build Include="EDW\Tables\fact_MisconductAnalysis.sql" />
+    <Build Include="control\Tables\environment.sql" />
+    <Build Include="control\Tables\Frequency.sql" />
+    <Build Include="control\Tables\PackageType.sql" />
+    <Build Include="control\Tables\package.sql" />
+    <Build Include="staging\Tables\Customer.sql" />
+    <Build Include="control\Tables\metrics.sql" />
+    <Build Include="EDW\Tables\DimCustomer.sql" />
+    <Build Include="EDW\Tables\fact_SalesAnalysis.sql" />
+    <Build Include="staging\Tables\Product.sql" />
+    <Build Include="staging\Tables\Promotion.sql" />
+    <Build Include="control\Tables\anomalies.sql" />
+    <Build Include="staging\Tables\POSChannel.sql" />
+    <Build Include="staging\Tables\Employee.sql" />
+    <Build Include="EDW\Stored Procedures\DateGenerator.sql" />
+    <Build Include="EDW\Stored Procedures\TimeGenerator.sql" />
+    <Build Include="Security\control.sql" />
+    <Build Include="Security\EDW.sql" />
+    <Build Include="Security\staging.sql" />
+  </ItemGroup>
+</Project>

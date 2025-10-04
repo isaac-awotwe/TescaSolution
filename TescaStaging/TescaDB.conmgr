@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="TescaDB"
+  DTS:DTSID="{53A82742-0807-4223-9FF4-3CEC7CFC971F}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=isaac_awotwe\ISAACMDX;Initial Catalog=TescaDB;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-stgProduct-{53A82742-0807-4223-9FF4-3CEC7CFC971F}isaac_awotwe\ISAACMDX.TescaDB;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

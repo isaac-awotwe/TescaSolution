@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[SalesTransaction] (
+    [TransactionID]      INT           IDENTITY (1, 1) NOT NULL,
+    [TransactionNO]      NVARCHAR (50) NULL,
+    [TransDate]          DATETIME      NULL,
+    [OrderDate]          DATETIME      NULL,
+    [DeliveryDate]       DATETIME      NULL,
+    [ChannelID]          INT           NULL,
+    [CustomerID]         INT           NULL,
+    [EmployeeID]         INT           NULL,
+    [ProductID]          INT           NULL,
+    [StoreID]            INT           NULL,
+    [PromotionID]        INT           NULL,
+    [Quantity]           FLOAT (53)    NOT NULL,
+    [TaxAmount]          FLOAT (53)    NULL,
+    [LineAmount]         FLOAT (53)    NULL,
+    [LineDiscountAmount] FLOAT (53)    NULL,
+    CONSTRAINT [PK_SalesTransaction] PRIMARY KEY CLUSTERED ([TransactionID] ASC),
+    CONSTRAINT [FK_SalesTransaction_Customer] FOREIGN KEY ([CustomerID]) REFERENCES [dbo].[Customer] ([CustomerID]),
+    CONSTRAINT [FK_SalesTransaction_Employee] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employee] ([EmployeeID]),
+    CONSTRAINT [FK_SalesTransaction_POSChannel] FOREIGN KEY ([ChannelID]) REFERENCES [dbo].[POSChannel] ([ChannelID]),
+    CONSTRAINT [FK_SalesTransaction_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ProductID]),
+    CONSTRAINT [FK_SalesTransaction_Promotion] FOREIGN KEY ([PromotionID]) REFERENCES [dbo].[Promotion] ([PromotionID]),
+    CONSTRAINT [FK_SalesTransaction_Store] FOREIGN KEY ([StoreID]) REFERENCES [dbo].[Store] ([StoreID])
+);
+

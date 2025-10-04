@@ -1,0 +1,864 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/10/2025 5:23:59 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ISAAC_AWOTWE"
+  DTS:CreatorName="ISAAC_AWOTWE\isaac"
+  DTS:DTSID="{A058055D-353C-4824-97FF-9D5DFF1C571E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="4105"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{5BE1ACBE-3D22-41E4-AC2B-6954F0F39F3A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C7AC178D-0E82-442F-A410-122539274A39}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DesCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5B60E3EA-AAF3-48E7-802C-FE6342B5E8F6}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PackageID">
+      <DTS:VariableValue
+        DTS:DataType="3">7</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CF729A83-CF6C-446F-B372-AE3A912DCBC9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Table Vendor"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3F11A145-9373-4302-9852-BC9C1FBA5EFC}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Table Vendor"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Table Vendor\desCount"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="desCount">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::DesCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Table Vendor\desCount.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Table Vendor\desCount.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Load Table Vendor\desCount.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Table Vendor\extract from source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="extract from source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select v.VendorID,v.VendorNo, CONCAT(UPPER(v.LastName),',',v.FirstName) as Vendor,v.RegistrationNo,
+v.VendorAddress, c.CityName, s.State, getdate() as LoadDate
+from Vendor v inner join City c on v.CityID = c.CityID
+inner join State s on c.StateID = s.StateID</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Table Vendor\extract from source.Connections[OleDbConnection]"
+                  connectionManagerID="{7167DC78-1AC0-4574-A1E9-74888431115E}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[TescaOLTP]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[VendorID]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorID]"
+                      name="VendorID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[VendorNo]"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorNo]"
+                      name="VendorNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[Vendor]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[Vendor]"
+                      length="101"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[Vendor]"
+                      name="Vendor"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[RegistrationNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[RegistrationNo]"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[RegistrationNo]"
+                      name="RegistrationNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorAddress]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[VendorAddress]"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorAddress]"
+                      name="VendorAddress"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[CityName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[CityName]"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[CityName]"
+                      name="CityName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[State]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[State]"
+                      name="State"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[LoadDate]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[VendorID]"
+                      dataType="i4"
+                      name="VendorID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[VendorNo]"
+                      dataType="wstr"
+                      length="50"
+                      name="VendorNo" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[Vendor]"
+                      dataType="wstr"
+                      length="101"
+                      name="Vendor" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[RegistrationNo]"
+                      dataType="wstr"
+                      length="50"
+                      name="RegistrationNo" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[VendorAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="VendorAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[CityName]"
+                      dataType="wstr"
+                      length="50"
+                      name="CityName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      dataType="wstr"
+                      length="50"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].ExternalColumns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      name="LoadDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[VendorID]"
+                      dataType="i4"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[VendorID]"
+                      name="VendorID" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[VendorNo]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[VendorNo]"
+                      name="VendorNo" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[Vendor]"
+                      dataType="wstr"
+                      length="101"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[Vendor]"
+                      name="Vendor" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[RegistrationNo]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[RegistrationNo]"
+                      name="RegistrationNo" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[VendorAddress]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[VendorAddress]"
+                      name="VendorAddress" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[CityName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[CityName]"
+                      name="CityName" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[State]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[State]"
+                      name="State" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[LoadDate]"
+                      name="LoadDate" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Table Vendor\load table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="load table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[staging].[Vendor]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Table Vendor\load table.Connections[OleDbConnection]"
+                  connectionManagerID="{53A82742-0807-4223-9FF4-3CEC7CFC971F}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[TescaDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[VendorID]"
+                      cachedDataType="i4"
+                      cachedName="VendorID"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[VendorID]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorID]" />
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[VendorNo]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="VendorNo"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[VendorNo]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorNo]" />
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[Vendor]"
+                      cachedDataType="wstr"
+                      cachedLength="101"
+                      cachedName="Vendor"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[Vendor]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[Vendor]" />
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[RegistrationNo]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="RegistrationNo"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[RegistrationNo]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[RegistrationNo]" />
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[VendorAddress]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="VendorAddress"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[VendorAddress]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[VendorAddress]" />
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[CityName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="CityName"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[CityName]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[CityName]" />
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[State]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].Columns[LoadDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="LoadDate"
+                      externalMetadataColumnId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                      lineageId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output].Columns[LoadDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[VendorID]"
+                      dataType="i4"
+                      name="VendorID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[VendorNo]"
+                      dataType="wstr"
+                      length="50"
+                      name="VendorNo" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[Vendor]"
+                      dataType="wstr"
+                      length="255"
+                      name="Vendor" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[RegistrationNo]"
+                      dataType="wstr"
+                      length="50"
+                      name="RegistrationNo" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[VendorAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="VendorAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[CityName]"
+                      dataType="wstr"
+                      length="50"
+                      name="CityName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      dataType="wstr"
+                      length="50"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input].ExternalColumns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      name="LoadDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Table Vendor\load table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Table Vendor\load table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Table Vendor\load table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Table Vendor\load table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Table Vendor\load table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Table Vendor.Paths[OLE DB Source Output]"
+              endId="Package\Load Table Vendor\desCount.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\Load Table Vendor\extract from source.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Load Table Vendor.Paths[Row Count Output 1]"
+              endId="Package\Load Table Vendor\load table.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\Load Table Vendor\desCount.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\metrics"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A20E5920-827D-4F0E-A533-C3A318802F7D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="metrics"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{53A82742-0807-4223-9FF4-3CEC7CFC971F}"
+          SQLTask:SqlStatementSource="declare @PackageID int =?&#xA;declare @StgSourceCount int =?&#xA;declare @StgDesCount int =?&#xA;insert into control.metrics(PackageID,StgSourceCount,StgDesCount,RunDate)&#xA;Values(@PackageID,@StgSourceCount,@StgDesCount,getdate())&#xA;update control.package set LastRunDate=getdate() where PackageID=@PackageID&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::PackageID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::SourceCount"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::DesCount"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SourceCount"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B5710085-2A9F-46D5-BD73-3C6292E34910}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SourceCount"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7167DC78-1AC0-4574-A1E9-74888431115E}"
+          SQLTask:SqlStatementSource="select count(*) as SourceCount&#xA;from Vendor v inner join City c on v.CityID = c.CityID&#xA;inner join State s on c.StateID = s.StateID"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="SourceCount"
+            SQLTask:DtsVariableName="User::SourceCount" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate staging vendor"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B1D93D5A-42CB-4733-8EDD-50AD2E65DC00}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate staging vendor"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{53A82742-0807-4223-9FF4-3CEC7CFC971F}"
+          SQLTask:SqlStatementSource="truncate table staging.Vendor" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{7DCF7898-C29C-42B1-88AA-B66C5F1CE1F2}"
+      DTS:From="Package\truncate staging vendor"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SourceCount" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{8632AA6D-92E4-4A5A-AEF7-22833767F5C5}"
+      DTS:From="Package\SourceCount"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Table Vendor" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{F40068EF-8278-435B-B2BA-CC890728654D}"
+      DTS:From="Package\Load Table Vendor"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\metrics" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="192,42.6666666666667"
+          Id="Package\truncate staging vendor"
+          TopLeft="364.999983683229,93.5999955368043" />
+        <NodeLayout
+          Size="140,42.6666666666667"
+          Id="Package\SourceCount"
+          TopLeft="391.249982509763,199.549990484715" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="461.124983096496,136.266662203471">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63.2833282812439"
+              Start="0,0"
+              End="0,55.7833282812439">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.7833282812439" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\Load Table Vendor"
+          TopLeft="386.24998273328,316.54998490572" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="461.249982509763,242.216657151381">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9.00000022351742,74.3333277543388"
+              Start="0,0"
+              End="9.00000022351742,66.8333277543388">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.1666638771694" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.1666638771694"
+                    Point2="0,37.1666638771694"
+                    Point3="4,37.1666638771694" />
+                  <mssgle:LineSegment
+                    End="5.00000022351742,37.1666638771694" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5.00000022351742,37.1666638771694"
+                    Point2="9.00000022351742,37.1666638771694"
+                    Point3="9.00000022351742,41.1666638771694" />
+                  <mssgle:LineSegment
+                    End="9.00000022351742,66.8333277543388" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="113.333333333334,42.6666666666667"
+          Id="Package\metrics"
+          TopLeft="413.124981531874,441.999978923798" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="470.02081546591,359.216651572387">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,82.7833273514113"
+              Start="0,0"
+              End="0,75.2833273514113">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,75.2833273514113" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Table Vendor">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Load Table Vendor\extract from source"
+          TopLeft="403.749981950969,85.1499959397317" />
+        <NodeLayout
+          Size="124,42.6666666666667"
+          Id="Package\Load Table Vendor\desCount"
+          TopLeft="428.749980833382,190.449990918637" />
+        <EdgeLayout
+          Id="Package\Load Table Vendor.Paths[OLE DB Source Output]"
+          TopLeft="490.249981392176,127.816662606398">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,62.6333283122382"
+              Start="0,0"
+              End="0,55.1333283122382">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.1333283122382" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="125.333333333334,42.6666666666667"
+          Id="Package\Load Table Vendor\load table"
+          TopLeft="436.249980498106,311.999985122681" />
+        <EdgeLayout
+          Id="Package\Load Table Vendor.Paths[Row Count Output 1]"
+          TopLeft="490.749980833382,233.116657585303">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.16666633139062,78.883327537378"
+              Start="0,0"
+              End="8.16666633139062,71.383327537378">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.441663768689" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.441663768689"
+                    Point2="0,39.441663768689"
+                    Point3="4,39.441663768689" />
+                  <mssgle:LineSegment
+                    End="4.16666633139062,39.441663768689" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.16666633139062,39.441663768689"
+                    Point2="8.16666633139062,39.441663768689"
+                    Point3="8.16666633139062,43.441663768689" />
+                  <mssgle:LineSegment
+                    End="8.16666633139062,71.383327537378" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Table Vendor\extract from source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Table Vendor\load table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
