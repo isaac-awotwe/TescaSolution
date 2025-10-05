@@ -1,6 +1,5 @@
 {
   "name": "SemanticModel",
-  "id": "SemanticModel",
   "compatibilityLevel": 1600,
   "model": {
     "culture": "en-CA",
@@ -140,11 +139,11 @@
               {
                 "name": "QueryEditorSerialization",
                 "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let",
-                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
-                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],",
-                  "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] > 20221231 and [TransDateSK] <= 20231231)",
-                  "in",
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let\r",
+                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",\r",
+                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],\r",
+                  "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] > 20221231 and [TransDateSK] <= 20231231)\r",
+                  "in\r",
                   "    #\"Filtered Rows\"</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -167,11 +166,11 @@
               {
                 "name": "QueryEditorSerialization",
                 "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let",
-                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
-                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],",
-                  "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] <= 20221231)",
-                  "in",
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let\r",
+                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",\r",
+                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],\r",
+                  "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] <= 20221231)\r",
+                  "in\r",
                   "    #\"Filtered Rows\"</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -195,10 +194,10 @@
               {
                 "name": "QueryEditorSerialization",
                 "value": [
-                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let",
-                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
-                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data]",
-                  "in",
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let\r",
+                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",\r",
+                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data]\r",
+                  "in\r",
                   "    EDW_fact_SalesAnalysis</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
                 ]
               }
@@ -233,12 +232,12 @@
               "targetExpression": "100",
               "statusGraphic": "Traffic Light - Single",
               "statusExpression": [
-                "var x='EDW fact_SalesAnalysis'[Total Quantity] return",
-                "            if(ISBLANK(x),BLANK(),",
-                "                    If(x<40,-1,",
-                "\t                If(x<80,0,1)",
-                "                )",
-                "            )",
+                "var x='EDW fact_SalesAnalysis'[Total Quantity] return\r",
+                "            if(ISBLANK(x),BLANK(),\r",
+                "                    If(x<40,-1,\r",
+                "\t                If(x<80,0,1)\r",
+                "                )\r",
+                "            )\r",
                 "            "
               ],
               "annotations": [
@@ -1225,5 +1224,6 @@
         "value": "700"
       }
     ]
-  }
+  },
+  "id": "SemanticModel"
 }
