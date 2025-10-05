@@ -1,5 +1,6 @@
 {
   "name": "SemanticModel",
+  "id": "SemanticModel",
   "compatibilityLevel": 1600,
   "model": {
     "culture": "en-CA",
@@ -28,6 +29,7 @@
     "tables": [
       {
         "name": "EDW fact_SalesAnalysis",
+        "isHidden": true,
         "columns": [
           {
             "name": "salesSK",
@@ -122,27 +124,164 @@
         ],
         "partitions": [
           {
-            "name": "Partition",
-            "dataView": "full",
+            "name": "EDW fact_SalesAnalysis20231231",
             "source": {
               "type": "m",
               "expression": [
                 "let",
                 "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
-                "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data]",
+                "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],",
+                "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] > 20221231 and [TransDateSK] <= 20231231)",
                 "in",
-                "    EDW_fact_SalesAnalysis"
+                "    #\"Filtered Rows\""
+              ]
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let",
+                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],",
+                  "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] > 20221231 and [TransDateSK] <= 20231231)",
+                  "in",
+                  "    #\"Filtered Rows\"</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "EDW fact_SalesAnalysis20221231",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],",
+                "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] <= 20221231)",
+                "in",
+                "    #\"Filtered Rows\""
+              ]
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let",
+                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],",
+                  "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] <= 20221231)",
+                  "in",
+                  "    #\"Filtered Rows\"</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "EDW fact_SalesAnalysis",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data],",
+                "    #\"Filtered Rows\" = Table.SelectRows(EDW_fact_SalesAnalysis, each [TransDateSK] > 20231231)",
+                "in",
+                "    #\"Filtered Rows\""
+              ]
+            },
+            "annotations": [
+              {
+                "name": "QueryEditorSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"QueryEditorSerialization\"><AnnotationContent><![CDATA[<RSQueryCommandText>let",
+                  "    Source = #\"SQL/isaac_awotwe\\ISAACMDX;TescaDB\",",
+                  "    EDW_fact_SalesAnalysis = Source{[Schema=\"EDW\",Item=\"fact_SalesAnalysis\"]}[Data]",
+                  "in",
+                  "    EDW_fact_SalesAnalysis</RSQueryCommandText><RSQueryCommandType>Text</RSQueryCommandType><RSQueryDesignState></RSQueryDesignState>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "measures": [
+          {
+            "name": "NetAmount",
+            "expression": "SUMX('EDW fact_SalesAnalysis','EDW fact_SalesAnalysis'[TaxAmount]+'EDW fact_SalesAnalysis'[LineAmount]-'EDW fact_SalesAnalysis'[LineDiscountAmount])"
+          },
+          {
+            "name": "Total Tax Amount",
+            "expression": "SUM('EDW fact_SalesAnalysis'[TaxAmount])"
+          },
+          {
+            "name": "Total Line Amount",
+            "expression": "SUM('EDW fact_SalesAnalysis'[LineAmount])"
+          },
+          {
+            "name": "Total Line Discount Amount",
+            "expression": "SUM('EDW fact_SalesAnalysis'[LineDiscountAmount])"
+          },
+          {
+            "name": "Total Transactions",
+            "expression": "COUNTROWS('EDW fact_SalesAnalysis')"
+          },
+          {
+            "name": "Total Quantity",
+            "expression": " SUM('EDW fact_SalesAnalysis'[Quantity])",
+            "kpi": {
+              "targetExpression": "100",
+              "statusGraphic": "Traffic Light - Single",
+              "statusExpression": [
+                "var x='EDW fact_SalesAnalysis'[Total Quantity] return",
+                "            if(ISBLANK(x),BLANK(),",
+                "                    If(x<40,-1,",
+                "\t                If(x<80,0,1)",
+                "                )",
+                "            )",
+                "            "
+              ],
+              "annotations": [
+                {
+                  "name": "GoalType",
+                  "value": "StaticValue"
+                },
+                {
+                  "name": "KpiStatusType",
+                  "value": "Linear"
+                },
+                {
+                  "name": "KpiThresholdType",
+                  "value": "Absolute"
+                },
+                {
+                  "name": "KpiThresholdOrdering",
+                  "value": "Ascending"
+                },
+                {
+                  "name": "KpiThresholdCount",
+                  "value": "2"
+                },
+                {
+                  "name": "KpiThreshold_0",
+                  "value": "40"
+                },
+                {
+                  "name": "KpiThreshold_1",
+                  "value": "80"
+                }
               ]
             }
           }
         ]
       },
       {
-        "name": "EDW DimCustomer",
+        "name": "Customer",
         "columns": [
           {
             "name": "customerSK",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "customerSK"
           },
           {
@@ -178,6 +317,7 @@
           {
             "name": "EffectiveDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveDate"
           }
         ],
@@ -199,66 +339,68 @@
         ]
       },
       {
-        "name": "EDW DimDate",
+        "name": "Delivery Date",
         "columns": [
           {
             "name": "dateSK",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "dateSK"
           },
           {
-            "name": "BusinessDate",
+            "name": "Delivery BusinessDate",
             "dataType": "dateTime",
             "sourceColumn": "BusinessDate"
           },
           {
-            "name": "BusinessYear",
+            "name": "Delivery BusinessYear",
             "dataType": "int64",
             "sourceColumn": "BusinessYear"
           },
           {
-            "name": "BusinessMonth",
+            "name": "Delivery BusinessMonth",
             "dataType": "int64",
             "sourceColumn": "BusinessMonth"
           },
           {
-            "name": "BusinessQuarter",
+            "name": "Delivery BusinessQuarter",
             "dataType": "string",
             "sourceColumn": "BusinessQuarter"
           },
           {
-            "name": "EnglishMonth",
+            "name": "Delivery EnglishMonth",
             "dataType": "string",
             "sourceColumn": "EnglishMonth"
           },
           {
-            "name": "SpanishMonth",
+            "name": "Delivery SpanishMonth",
             "dataType": "string",
             "sourceColumn": "SpanishMonth"
           },
           {
-            "name": "FrenchMonth",
+            "name": "Delivery FrenchMonth",
             "dataType": "string",
             "sourceColumn": "FrenchMonth"
           },
           {
-            "name": "EnglishDayofWeek",
+            "name": "Delivery EnglishDayofWeek",
             "dataType": "string",
             "sourceColumn": "EnglishDayofWeek"
           },
           {
-            "name": "SpanishDayofWeek",
+            "name": "Delivery SpanishDayofWeek",
             "dataType": "string",
             "sourceColumn": "SpanishDayofWeek"
           },
           {
-            "name": "FrenchDayofWeek",
+            "name": "Delivery FrenchDayofWeek",
             "dataType": "string",
             "sourceColumn": "FrenchDayofWeek"
           },
           {
             "name": "LoadDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "LoadDate"
           }
         ],
@@ -280,25 +422,26 @@
         ]
       },
       {
-        "name": "EDW DimEmployee",
+        "name": "Sales Person",
         "columns": [
           {
             "name": "employeeSK",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "employeeSK"
           },
           {
-            "name": "EmployeeID",
+            "name": "Salerperson ID",
             "dataType": "int64",
             "sourceColumn": "EmployeeID"
           },
           {
-            "name": "EmployeeNumber",
+            "name": "SalerpersonNo",
             "dataType": "string",
             "sourceColumn": "EmployeeNumber"
           },
           {
-            "name": "EmployeeName",
+            "name": "Sales Person",
             "dataType": "string",
             "sourceColumn": "EmployeeName"
           },
@@ -315,11 +458,13 @@
           {
             "name": "EffectiveStartDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveStartDate"
           },
           {
             "name": "EffectiveEndDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveEndDate"
           }
         ],
@@ -341,11 +486,12 @@
         ]
       },
       {
-        "name": "EDW DimPOSChannel",
+        "name": "POSChannel",
         "columns": [
           {
             "name": "poschannelSK",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "poschannelSK"
           },
           {
@@ -376,11 +522,13 @@
           {
             "name": "EffectiveStartDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveStartDate"
           },
           {
             "name": "EffectiveEndDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveEndDate"
           }
         ],
@@ -402,11 +550,12 @@
         ]
       },
       {
-        "name": "EDW DimProduct",
+        "name": "Product",
         "columns": [
           {
             "name": "productSK",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "productSK"
           },
           {
@@ -437,11 +586,13 @@
           {
             "name": "EffectiveStartDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveStartDate"
           },
           {
             "name": "EffectiveEndDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveEndDate"
           }
         ],
@@ -460,19 +611,38 @@
               ]
             }
           }
+        ],
+        "hierarchies": [
+          {
+            "name": "ProductHierarchy",
+            "levels": [
+              {
+                "name": "Department",
+                "ordinal": 0,
+                "column": "Department"
+              },
+              {
+                "name": "Product",
+                "ordinal": 1,
+                "column": "Product"
+              }
+            ]
+          }
         ]
       },
       {
-        "name": "EDW DimPromotion",
+        "name": "Promotion",
         "columns": [
           {
             "name": "promotionSK",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "promotionSK"
           },
           {
             "name": "PromotionID",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "PromotionID"
           },
           {
@@ -519,11 +689,12 @@
         ]
       },
       {
-        "name": "EDW DimStore",
+        "name": "Store",
         "columns": [
           {
             "name": "storeSK",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "storeSK"
           },
           {
@@ -554,6 +725,7 @@
           {
             "name": "EffectiveDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "EffectiveDate"
           }
         ],
@@ -580,31 +752,33 @@
           {
             "name": "TimeSk",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "TimeSk"
           },
           {
-            "name": "TimeHour",
+            "name": "Trans Time Hour",
             "dataType": "int64",
             "sourceColumn": "TimeHour"
           },
           {
-            "name": "TimeInterval",
+            "name": "Trans Time Interval",
             "dataType": "string",
             "sourceColumn": "TimeInterval"
           },
           {
-            "name": "BusinessHour",
+            "name": "Trans Business Hour",
             "dataType": "string",
             "sourceColumn": "BusinessHour"
           },
           {
-            "name": "PeriodofDay",
+            "name": "Trans Period of Day",
             "dataType": "string",
             "sourceColumn": "PeriodofDay"
           },
           {
             "name": "LoadDate",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "LoadDate"
           }
         ],
@@ -634,39 +808,40 @@
             "dataType": "int64",
             "isNameInferred": true,
             "isDataTypeInferred": true,
+            "isHidden": true,
             "sourceColumn": "TransHour[TimeSk]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "TimeHour",
+            "name": "Order Time Hour",
             "dataType": "int64",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "TransHour[TimeHour]"
+            "sourceColumn": "TransHour[Trans Time Hour]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "TimeInterval",
+            "name": "Order Time Interval",
             "dataType": "string",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "TransHour[TimeInterval]"
+            "sourceColumn": "TransHour[Trans Time Interval]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "BusinessHour",
+            "name": "Order Business Hour",
             "dataType": "string",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "TransHour[BusinessHour]"
+            "sourceColumn": "TransHour[Trans Business Hour]"
           },
           {
             "type": "calculatedTableColumn",
-            "name": "PeriodofDay",
+            "name": "Order Period of Day",
             "dataType": "string",
-            "isNameInferred": true,
+            "isNameInferred": false,
             "isDataTypeInferred": true,
-            "sourceColumn": "TransHour[PeriodofDay]"
+            "sourceColumn": "TransHour[Trans Period of Day]"
           },
           {
             "type": "calculatedTableColumn",
@@ -674,6 +849,7 @@
             "dataType": "dateTime",
             "isNameInferred": true,
             "isDataTypeInferred": true,
+            "isHidden": true,
             "sourceColumn": "TransHour[LoadDate]"
           }
         ],
@@ -686,72 +862,318 @@
             }
           }
         ]
+      },
+      {
+        "name": "TransDate",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "dateSK",
+            "dataType": "int64",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "sourceColumn": "Delivery Date[dateSK]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans BusinessDate",
+            "dataType": "dateTime",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessDate]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans BusinessYear",
+            "dataType": "int64",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessYear]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans BusinessMonth",
+            "dataType": "int64",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans BusinessQuarter",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessQuarter]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans EnglishMonth",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery EnglishMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans SpanishMonth",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery SpanishMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans FrenchMonth",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery FrenchMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans EnglishDayofWeek",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery EnglishDayofWeek]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans SpanishDayofWeek",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery SpanishDayofWeek]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Trans FrenchDayofWeek",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery FrenchDayofWeek]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "LoadDate",
+            "dataType": "dateTime",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "sourceColumn": "Delivery Date[LoadDate]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "'Delivery Date'"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "TransDateHierarchy",
+            "levels": [
+              {
+                "name": "Trans BusinessQuarter",
+                "ordinal": 1,
+                "column": "Trans BusinessQuarter"
+              },
+              {
+                "name": "Trans BusinessYear",
+                "ordinal": 0,
+                "column": "Trans BusinessYear"
+              },
+              {
+                "name": "Trans EnglishMonth",
+                "ordinal": 2,
+                "column": "Trans EnglishMonth"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "OrderDate",
+        "isHidden": true,
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "dateSK",
+            "dataType": "int64",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "sourceColumn": "Delivery Date[dateSK]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order Business Date",
+            "dataType": "dateTime",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessDate]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order Business Year",
+            "dataType": "int64",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessYear]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order Business Month",
+            "dataType": "int64",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order Business Quarter",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery BusinessQuarter]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order English Month",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery EnglishMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order Spanish Month",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery SpanishMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order French Month",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery FrenchMonth]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order English Day of Week",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery EnglishDayofWeek]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order SpanishDayofWeek",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery SpanishDayofWeek]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "Order FrenchDayofWeek",
+            "dataType": "string",
+            "isNameInferred": false,
+            "isDataTypeInferred": true,
+            "sourceColumn": "Delivery Date[Delivery FrenchDayofWeek]"
+          },
+          {
+            "type": "calculatedTableColumn",
+            "name": "LoadDate",
+            "dataType": "dateTime",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "sourceColumn": "Delivery Date[LoadDate]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "'Delivery Date'"
+            }
+          }
+        ]
+      },
+      {
+        "name": "TransactionNo",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "TransactionNo",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "EDW fact_SalesAnalysis[TransactionNo]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "VALUES('EDW fact_SalesAnalysis'[TransactionNo])"
+            }
+          }
+        ]
       }
     ],
     "relationships": [
       {
-        "name": "fe6f35e8-028c-4cda-a667-e9622c2b4719",
-        "fromTable": "EDW fact_SalesAnalysis",
-        "fromColumn": "DeliveryDateSK",
-        "toTable": "EDW DimDate",
-        "toColumn": "dateSK",
-        "isActive": false
-      },
-      {
-        "name": "ab411bb6-03e5-4f4f-9587-247f51cfbc8d",
-        "fromTable": "EDW fact_SalesAnalysis",
-        "fromColumn": "OrderDateSK",
-        "toTable": "EDW DimDate",
-        "toColumn": "dateSK",
-        "isActive": false
-      },
-      {
         "name": "e3c4b2ca-4ceb-4dce-822b-8ac1cfe3eae1",
         "fromTable": "EDW fact_SalesAnalysis",
         "fromColumn": "CustomerSK",
-        "toTable": "EDW DimCustomer",
+        "toTable": "Customer",
         "toColumn": "customerSK"
-      },
-      {
-        "name": "55f59ef8-770d-4c32-b7a0-b08b145f9fe2",
-        "fromTable": "EDW fact_SalesAnalysis",
-        "fromColumn": "TransDateSK",
-        "toTable": "EDW DimDate",
-        "toColumn": "dateSK"
       },
       {
         "name": "a5975918-43c7-41f4-ada4-eb2cb081f262",
         "fromTable": "EDW fact_SalesAnalysis",
         "fromColumn": "EmployeeSK",
-        "toTable": "EDW DimEmployee",
+        "toTable": "Sales Person",
         "toColumn": "employeeSK"
       },
       {
         "name": "b4a163c8-ac61-42a1-a45c-c282c015bc79",
         "fromTable": "EDW fact_SalesAnalysis",
         "fromColumn": "ChannelSK",
-        "toTable": "EDW DimPOSChannel",
+        "toTable": "POSChannel",
         "toColumn": "poschannelSK"
       },
       {
         "name": "fda8ab7b-f799-4524-bccb-4736e3365964",
         "fromTable": "EDW fact_SalesAnalysis",
         "fromColumn": "ProductSK",
-        "toTable": "EDW DimProduct",
+        "toTable": "Product",
         "toColumn": "productSK"
       },
       {
         "name": "9dc9b3fb-acec-4e60-8dc9-90936c5ce5d7",
         "fromTable": "EDW fact_SalesAnalysis",
         "fromColumn": "PromotionSK",
-        "toTable": "EDW DimPromotion",
+        "toTable": "Promotion",
         "toColumn": "promotionSK"
       },
       {
         "name": "ccc20469-ad79-4146-97d0-56fd4540d4e9",
         "fromTable": "EDW fact_SalesAnalysis",
         "fromColumn": "StoreSK",
-        "toTable": "EDW DimStore",
+        "toTable": "Store",
         "toColumn": "storeSK"
       },
       {
@@ -767,6 +1189,34 @@
         "fromColumn": "OrderHourSK",
         "toTable": "OrderHour",
         "toColumn": "TimeSk"
+      },
+      {
+        "name": "57885d6a-c90e-404f-a0dd-6711eb9c58cf",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "DeliveryDateSK",
+        "toTable": "Delivery Date",
+        "toColumn": "dateSK"
+      },
+      {
+        "name": "0dac2c6a-6363-403d-8725-a67558dd10f8",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "TransDateSK",
+        "toTable": "TransDate",
+        "toColumn": "dateSK"
+      },
+      {
+        "name": "9721684b-829d-406a-9c17-4bc302ca7d01",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "OrderDateSK",
+        "toTable": "OrderDate",
+        "toColumn": "dateSK"
+      },
+      {
+        "name": "9f1d0903-df03-43bc-bf6c-3338e14d0e02",
+        "fromTable": "EDW fact_SalesAnalysis",
+        "fromColumn": "TransactionNo",
+        "toTable": "TransactionNo",
+        "toColumn": "TransactionNo"
       }
     ],
     "annotations": [
@@ -775,6 +1225,5 @@
         "value": "700"
       }
     ]
-  },
-  "id": "SemanticModel"
+  }
 }
